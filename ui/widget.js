@@ -28,7 +28,13 @@ const RESIZE_CORNER_PX = 26;
 
 const API_METHODS = ['get_state', 'refresh', 'set_pref', 'hide_window', 'quit_app', 'boot_report'];
 
-const PREF_KEYS = { on_top: 'sw-on-top', autostart: 'sw-autostart', notify: 'sw-notify', glass: 'sw-glass' };
+const PREF_KEYS = {
+  on_top: 'sw-on-top',
+  autostart: 'sw-autostart',
+  notify: 'sw-notify',
+  glass: 'sw-glass',
+  draggable: 'sw-draggable',
+};
 
 const BADGES = {
   ok: 'BALANCE',
@@ -105,6 +111,7 @@ function render(next) {
   el('foot-line').textContent = next.foot || '';
 
   const prefs = next.prefs || {};
+  root.dataset.draggable = String(prefs.draggable !== false);
   for (const [key, id] of Object.entries(PREF_KEYS)) {
     const node = el(id);
     if (node) node.setAttribute('aria-checked', String(Boolean(prefs[key])));
@@ -148,9 +155,13 @@ function bindGestures() {
   // and therefore the request to read the wallet again.
   const INTERACTIVE = 'button, input, select, textarea, a, .switch';
   const card = el('card');
+  // The host refuses gestures while the card is locked; checking here as well just
+  // saves a round trip and keeps the cursor from looking draggable.
+  const locked = () => Boolean(state && state.prefs && state.prefs.draggable === false);
 
   card.addEventListener('mousedown', (event) => {
     if (event.button !== 0 || event.target.closest(INTERACTIVE)) return;
+    if (locked()) return;
 
     const box = card.getBoundingClientRect();
     const corner =

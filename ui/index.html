@@ -21,6 +21,10 @@
         width: 22px;
         height: 22px;
       }
+      /* With the card locked there is nothing to grab, so the marker goes away. */
+      .widget[data-draggable="false"] .grip {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -80,6 +84,8 @@
                     title="Windows notification when the balance runs out">Notify</button>
             <button class="switch" id="sw-glass" type="button" role="switch" aria-checked="true"
                     title="Blur the desktop behind the card">Glass</button>
+            <button class="switch" id="sw-draggable" type="button" role="switch" aria-checked="true"
+                    title="Untick to lock the card in place: no moving and no resizing">Draggable</button>
           </div>
         </div>
 

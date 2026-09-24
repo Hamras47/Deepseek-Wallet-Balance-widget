@@ -36,7 +36,11 @@ there is no polling and no timer.
 ## How it behaves
 
 - Drag anywhere to move it; drag the bottom-right corner to resize.
-- It stays on screen when you show the desktop (Win+D or the three-finger swipe).
+- **Draggable** (in the sheet, and in the tray menu) locks the card where you put it —
+  once unticked the host refuses both gestures, so it cannot be nudged by accident.
+- It stays on screen when you show the desktop (Win+D or the three-finger swipe), and it
+  goes back **behind** your windows when the desktop is dismissed. Turn "Always on top" on
+  only if you want it floating over everything.
 - Tray menu: refresh balance, show/hide, always on top, start with Windows, stay on
   desktop, quit.
 
