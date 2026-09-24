@@ -37,7 +37,8 @@ there is no polling and no timer.
 
 - Drag anywhere to move it; drag the bottom-right corner to resize.
 - **Draggable** (in the sheet, and in the tray menu) locks the card where you put it —
-  once unticked the host refuses both gestures, so it cannot be nudged by accident.
+  once unticked the host refuses both gestures *and* the click-to-refresh, so a locked
+  card ignores being touched. Use the tray's *Refresh balance* when it is locked.
 - It stays on screen when you show the desktop (Win+D or the three-finger swipe), and it
   goes back **behind** your windows when the desktop is dismissed. Turn "Always on top" on
   only if you want it floating over everything.

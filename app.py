@@ -2147,8 +2147,16 @@ class Api:
 
     def refresh(self) -> dict:
         """A click on the card. The fetch runs on a worker thread; the page gets the
-        cached payload back at once and the fresh one when it lands."""
+        cached payload back at once and the fresh one when it lands.
+
+        Refused while the card is locked, exactly like the gestures: a locked widget
+        should not react to being touched, and every read costs an API call.  The tray's
+        "Refresh balance" item still works -- that is a deliberate request.
+        """
         self._touch()
+        if not self._widget.config.get("draggable", True):
+            log("refresh ignored (draggable is off)")
+            return self._widget.payload()
         self._widget.refresh_balance("the card")
         return self._widget.payload()
 

@@ -180,7 +180,7 @@ function bindGestures() {
   });
 
   card.addEventListener('mouseup', (event) => {
-    if (event.button !== 0 || !pressed) return;
+    if (event.button !== 0 || !pressed || locked()) return;
     const travelled = Math.abs(event.screenX - pressed.x) + Math.abs(event.screenY - pressed.y);
     pressed = null;
     if (travelled > CLICK_SLOP_PX) return; // that was a drag, not a click
