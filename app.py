@@ -939,7 +939,10 @@ def load_config() -> dict:
         "window": dict(DEFAULT_WINDOW),
     }
     try:
-        raw = json.loads(CONFIG_FILE.read_text(encoding="utf-8"))
+        # utf-8-sig: a config edited by another tool (PowerShell's Set-Content) can start
+        # with a BOM, and json.loads rejects that -- which silently fell back to the
+        # defaults and reset every preference, "always on top" included.
+        raw = json.loads(CONFIG_FILE.read_text(encoding="utf-8-sig"))
     except (OSError, ValueError):
         return defaults
     merged = {**defaults, **{key: value for key, value in raw.items() if key in defaults}}
