@@ -161,26 +161,29 @@ function bindGestures() {
 
   card.addEventListener('mousedown', (event) => {
     if (event.button !== 0 || event.target.closest(INTERACTIVE)) return;
-    if (locked()) return;
 
     const box = card.getBoundingClientRect();
     const corner =
       box.right - event.clientX <= RESIZE_CORNER_PX &&
       box.bottom - event.clientY <= RESIZE_CORNER_PX;
-    if (corner) {
+    if (corner && !locked()) {
       event.preventDefault();
       report('gesture', 'resize');
       call('begin_resize');
       return;
     }
 
+    // The press is recorded even while locked: the lock refuses the window move, not
+    // the click.  Reading the wallet from the card keeps working, which is the whole
+    // point of the card when the user has parked it somewhere.
     pressed = { x: event.screenX, y: event.screenY };
+    if (locked()) return;
     report('gesture', 'move');
     call('begin_move');
   });
 
   card.addEventListener('mouseup', (event) => {
-    if (event.button !== 0 || !pressed || locked()) return;
+    if (event.button !== 0 || !pressed) return;
     const travelled = Math.abs(event.screenX - pressed.x) + Math.abs(event.screenY - pressed.y);
     pressed = null;
     if (travelled > CLICK_SLOP_PX) return; // that was a drag, not a click
