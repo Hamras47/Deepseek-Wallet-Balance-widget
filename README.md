@@ -5,6 +5,16 @@ the last stretch of API use cost.
 
 ![The card](doc/preview-balance.png)
 
+### No background
+
+Switch on **No background** (in the settings sheet, or the tray menu) and the card disappears:
+the widget is drawn straight onto your wallpaper, with softer text so it blends in. Right-click
+it for its menu, or choose *Show the glass card* to bring the card back.
+
+![The balance with no background](doc/preview-no-background.png)
+
+Double-click it to refresh the balance.
+
 ## Add your API key (one time)
 
 1. Create a key at **platform.deepseek.com → API keys**. It is shown once, so copy it then.
